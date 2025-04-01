@@ -1,0 +1,15 @@
+<div class="weather-card">
+  <div class="weather-img">
+    <img src="../Assets/{{weather}}.png" alt="city-1" />
+  </div>
+  <h2 class="city-name">{{cityName}}</h2>
+  <div class="temperature">
+    <i class="fa-solid fa-temperature-three-quarters"></i>
+    <h2>{{realTemperature}} °C</h2>
+  </div>
+  <p class="feel-temp">Відчувається як {{feelTemperature}} °C</p>
+  <a
+    href="http://localhost:3000/weather/{{cityNameNormalized}}"
+    class="btn"
+  >Детальніше</a>
+</div>

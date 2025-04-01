@@ -1,0 +1,44 @@
+# Node.js модулі
+node_modules/
+npm-debug.log*
+yarn-error.log
+pnpm-debug.log
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Експрес-файли (якщо є)
+.env
+.env.local
+.env.*.local
+
+# Логи та вихідні файли
+logs/
+*.log
+*.log.*
+debug.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Кеш
+.cache/
+.nyc_output/
+coverage/
+dist/
+build/
+tmp/
+out/
+
+# IDE та редактори коду
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Операційні системи
+.DS_Store
+Thumbs.db
