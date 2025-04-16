@@ -1,0 +1,234 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  color: #333;
+}
+
+header {
+  background: #007acc;
+  color: white;
+  padding: 2em 0;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+.logo {
+  margin: 0;
+}
+
+nav a {
+  color: white;
+  margin-left: 1em;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #cce8ff;
+}
+
+main {
+  padding: 2em;
+}
+
+.posts,
+.form-section {
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 2em;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.home {
+  margin: 20rem auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 670px;
+  font-weight: bold;
+  font-size: 2.5em;
+  text-align: center;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 0.7em;
+  margin: 0.5em 0 1em 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+input {
+  outline: none;
+}
+
+a,
+.btn {
+  background: #007acc;
+  color: white;
+  padding: 0.7em 1.5em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+a:hover,
+.btn:hover {
+  background: #005fa3;
+}
+
+.post {
+  margin-bottom: 2em;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.record__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 2rem;
+}
+
+.record__options {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.fa-trash {
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.fa-trash:hover {
+  color: #666;
+}
+
+.edit__btn {
+  padding: 0.4em 0.7em;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.edit__btn:hover {
+  color: #666;
+}
+
+.record__author {
+  text-align: right;
+  margin-right: 2em;
+  color: #777;
+}
+
+.date {
+  font-size: 0.9em;
+  color: #777;
+}
+
+.modal__form {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.modal__form.active {
+  display: flex;
+}
+
+.modal__form form {
+  max-width: 500px;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  position: relative;
+  z-index: 11;
+}
+
+.modal__form .form__title {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.modal__form .submit__btn {
+  display: block;
+  margin: 1em auto 0;
+  font-size: 1em;
+  width: 100%;
+}
+
+.new-task__close-btn {
+  font-size: 2rem;
+  position: absolute;
+  top: 0.8rem;
+  right: 1rem;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.new-task__close-btn:hover {
+  color: #000;
+}
+
+.post-btn {
+  margin: 2em auto 0;
+  display: block;
+}
+
+.modal__close-btn {
+  position: absolute;
+  top: 0.7rem;
+  right: 1rem;
+  font-size: 2em;
+
+  &:hover {
+    cursor: pointer;
+    color: #777;
+  }
+}
+
+.primary {
+  margin: 2em;
+}

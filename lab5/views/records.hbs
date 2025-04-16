@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8" />
+    <title>Пости — MyBlog</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+{{>header}}
+
+<main>
+    <section class="posts"></section>
+</main>
+
+<div class="modal__form">
+    <form>
+        <i class="fa-solid fa-xmark modal__close-btn"></i>
+        <h3 class="form__title">Post</h3>
+        <label for="title">Title</label>
+        <input type="text" id="title" class="title" required>
+        <label for="content">Content</label>
+        <input type="text" id="content" class="content" required>
+        <label for="author">Author</label>
+        <input type="text" id="author" class="author" required>
+        <button type="submit" class="btn submit__btn">Submit</button>
+    </form>
+</div>
+
+<script>
+    const API_URL = "http://localhost:3000/records";
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        const postsSection = document.querySelector(".posts");
+        const modalForm = document.querySelector(".modal__form");
+        const form = modalForm.querySelector("form");
+        const titleInput = form.querySelector(".title");
+        const contentInput = form.querySelector(".content");
+        const authorInput = form.querySelector(".author");
+
+        let records = [];
+        let editingId = null;
+
+        const response = await fetch(API_URL);
+        records = await response.json();
+
+        renderPosts();
+
+        function renderPosts() {
+            postsSection.innerHTML = records.map(buildPostMarkup).join("") + `
+          <button class="btn post-btn">
+            <i class="fa-solid fa-plus"></i> Create new post
+          </button>
+        `;
+            setupPostButtons();
+        }
+
+        function buildPostMarkup({ title, _id, content, author }) {
+            return `
+          <article class="post" data-id="${_id}">
+            <div class="record__header">
+              <h3 class="record__title">${title}</h3>
+              <div class="record__options">
+                <button class="edit__btn"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                <i class="fa-solid fa-trash delete__btn"></i>
+              </div>
+            </div>
+            <p class="record__content">${content}</p>
+            <p class="record__author">${author}</p>
+          </article>
+        `;
+        }
+
+        function setupPostButtons() {
+            document.querySelectorAll(".edit__btn").forEach(btn => {
+                btn.addEventListener("click", e => {
+                    const post = e.target.closest(".post");
+                    const id = post.dataset.id;
+                    const record = records.find(r => r._id === id);
+                    editingId = id;
+                    openForm(record);
+                });
+            });
+
+            document.querySelectorAll(".delete__btn").forEach(btn => {
+                btn.addEventListener("click", async e => {
+                    const post = e.target.closest(".post");
+                    const id = post.dataset.id;
+                    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+                    records = records.filter(r => r._id !== id);
+                    renderPosts();
+                });
+            });
+
+            document.querySelector(".post-btn")?.addEventListener("click", () => {
+                editingId = null;
+                openForm();
+            });
+        }
+
+        function openForm(record = {}) {
+            form.reset();
+            titleInput.value = record.title || "";
+            contentInput.value = record.content || "";
+            authorInput.value = record.author || "";
+            modalForm.classList.add("active");
+        }
+
+        modalForm.addEventListener("click", e => {
+            if (e.target === modalForm) modalForm.classList.remove("active");
+        });
+
+        modalForm.querySelector(".modal__close-btn").addEventListener("click", () => {
+            modalForm.classList.remove("active");
+        });
+
+        form.addEventListener("submit", async e => {
+            e.preventDefault();
+            const newPost = {
+                title: titleInput.value,
+                content: contentInput.value,
+                author: authorInput.value
+            };
+
+            if (editingId) {
+                await fetch(`${API_URL}/${editingId}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(newPost)
+                });
+                const index = records.findIndex(r => r._id === editingId);
+                records[index] = { ...records[index], ...newPost };
+            } else {
+                const res = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(newPost)
+                });
+                const created = await res.json();
+                records.push(created);
+            }
+
+            modalForm.classList.remove("active");
+            renderPosts();
+        });
+    });
+</script>
+</body>
+</html>
